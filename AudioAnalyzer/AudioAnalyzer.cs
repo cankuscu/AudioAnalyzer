@@ -2,13 +2,13 @@
 
 namespace AudioAnalyzer
 {
-    public class AudioAnalyzer
+    public static class AudioAnalyzer
     {
         private const int Divider = 2;
         private const double MaxVal = 32767.0d;
         private const double ResizeMultiplier = 10.0d;
 
-        public int[] GetAmplitudesFromBytes(byte[] audioBytes)
+        public static int[] GetAmplitudesFromBytes(byte[] audioBytes)
         {
             // create a new int array with half the length of original bytes
             // as original audio has 2 bytes per channel
@@ -33,13 +33,13 @@ namespace AudioAnalyzer
             return amps;
         }
 
-        public double ResizeNumber(double value)
+        public static double ResizeNumber(double value)
         {
             var temp = (int)(value * ResizeMultiplier);
             return temp / ResizeMultiplier;
         }
 
-        public int[] GetAmplitudeLevels(byte[] audioBytes)
+        public static int[] GetAmplitudeLevels(byte[] audioBytes)
         {
             var amps = GetAmplitudesFromBytes(audioBytes);
             int major = 0;
@@ -54,7 +54,7 @@ namespace AudioAnalyzer
             return new int[] { major, minor };
         }
 
-        public int GetAmplitudeLevel(byte[] audioBytes)
+        public static int GetAmplitudeLevel(byte[] audioBytes)
         {
             var amps = GetAmplitudesFromBytes(audioBytes);
             int major = 0;
@@ -69,7 +69,7 @@ namespace AudioAnalyzer
             return Math.Max(major, minor * (-1));
         }
 
-        public double GetRealDecibel(int amplitude)
+        public static double GetRealDecibel(int amplitude)
         {
             // make sure its greater then zero
             if (amplitude < 0) amplitude *= -1;
@@ -91,7 +91,7 @@ namespace AudioAnalyzer
         /// </summary>
         /// <param name="audioBytes"></param>
         /// <returns></returns>
-        public double[] GetDecibels(byte[] audioBytes)
+        public static double[] GetDecibels(byte[] audioBytes)
         {
             var amps = GetAmplitudesFromBytes(audioBytes);
             var decibels = new double[audioBytes.Length];
@@ -108,7 +108,7 @@ namespace AudioAnalyzer
         /// </summary>
         /// <param name="audioBytes"></param>
         /// <returns>double decibel</returns>
-        public double GetDecibel(byte[] audioBytes)
+        public static double GetDecibel(byte[] audioBytes)
         {
             var amp = GetAmplitudeLevel(audioBytes);
             return GetRealDecibel(amp);
